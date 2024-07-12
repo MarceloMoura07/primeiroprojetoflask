@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 import os
+import sqlalchemy
 
 app = Flask(__name__)
 
@@ -20,7 +21,19 @@ login_manager = LoginManager(app)  # gerencia o login
 login_manager.login_view = 'login'  # a pagina que vai direcionar quando usuario fizer login na pagina bloqueada
 login_manager.login_message_category = 'alert-info'  # mensage que exibe para fazer login
 
+from comunidadeimpressionadora import models
+engine = sqlalchemy.create_engine(app.config['SQLALCHEMY_DATABASE_URI'])
+inspector = sqlalchemy.inspect(engine)
+if not inspector.has_table("usuario"):
+    with app.app_context():
+        database.drop_all()
+        database.create_all()
+        print("Base de dados criado")
+else:
+    print("Base de dados já existente")
+
 from comunidadeimpressionadora import routes #Está executando os routes. Ele está no fim, porque 1º precisa executar o app
+
 
 
 
