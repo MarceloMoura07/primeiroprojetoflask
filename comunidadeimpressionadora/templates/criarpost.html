@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <form method="POST" action="" class="border p-4 mt-2">
+                    {{ form.csrf_token }} <!-- Sempre colocar o token logo abaixo do form -->
+                    <legend>Criar Post</legend>  <!-- Substituiu o H1 por legend, ou seja, o título do formulário-->
+                    <fieldset> <!-- Organiza os campos do formulário -->
+                        <div class="form-group">
+                            {{ form.titulo.label(class="form-control-label") }}  <!-- o label é o rótulo da caixinha de formulário -->
+                            {% if form.titulo.errors %}  <!-- Para exibir mensagem de erro ao fazer o login-->
+                                {{ form.titulo(class="form-control is-invalid") }} <!-- a class está entre () porque é uma variável do python-->
+                            <div class="invalid-feedback">
+                                {% for erro in form.titulo.errors %}
+                                    {{ erro }}
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                                {{ form.titulo(class="form-control") }}
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.corpo.label(class="form-control-label") }}  <!-- o label é o rótulo da caixinha de formulário -->
+                            {% if form.corpo.errors %}  <!-- Para exibir mensagem de erro ao fazer o login-->
+                                {{ form.corpo(class="form-control is-invalid") }} <!-- a class está entre () porque é uma variável do python-->
+                            <div class="invalid-feedback">
+                                {% for erro in form.corpo.errors %}
+                                    {{ erro }}
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                                {{ form.corpo(class="form-control") }}
+                            {% endif %}
+                        </div>
+
+                    </fieldset>
+                    {{ form.botao_submit(class="btn btn-primary mt-2") }} <!-- a class estiliza o botão -->
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
